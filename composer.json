@@ -1,0 +1,11 @@
+{
+  "name": "jleagle/battlenet-api-client",
+  "require": {
+    "guzzlehttp/guzzle": "~5.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Jleagle\\BattleNet\\": "src/"
+    }
+  }
+}
