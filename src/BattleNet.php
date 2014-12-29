@@ -5,6 +5,7 @@ use GuzzleHttp\Client;
 use Jleagle\BattleNet\Enums\ServerLocale;
 use Jleagle\BattleNet\Exceptions\BattleNetException;
 use Jleagle\BattleNet\Responses\AuctionResponse;
+use Jleagle\BattleNet\Responses\RealmResponse;
 
 class BattleNet
 {
@@ -12,6 +13,11 @@ class BattleNet
   private $_serverLocale;
   private $_responseLocale;
 
+  /**
+   * @param string $apiKey
+   * @param string $serverLocale
+   * @param string $responseLocale
+   */
   public function __construct(
     $apiKey, $serverLocale = ServerLocale::US, $responseLocale = null
   )
@@ -21,6 +27,12 @@ class BattleNet
     $this->_responseLocale = $responseLocale;
   }
 
+  /**
+   * @param string $realmSlug
+   *
+   * @return AuctionResponse
+   * @throws BattleNetException
+   */
   public function getAuction($realmSlug)
   {
     $data = $this->_grab('auction/data/' . $realmSlug);
@@ -38,11 +50,38 @@ class BattleNet
     );
   }
 
+  /**
+   * @return array
+   */
+  public function getRealms()
+  {
+    $data = $this->_grab('realm/status');
+
+    $return = [];
+    foreach($data['realms'] as $realm)
+    {
+      $return[] = new RealmResponse($realm);
+    }
+    return $return;
+  }
+
+  /**
+   * @param string $path
+   *
+   * @return string
+   */
   private function _makeApiUrl($path)
   {
     return 'https://' . $this->_serverLocale . '.api.battle.net/wow/' . $path;
   }
 
+  /**
+   * @param string $path
+   * @param array  $options
+   *
+   * @return array
+   * @throws BattleNetException
+   */
   private function _grab($path, $options = [])
   {
     $client = new Client();
