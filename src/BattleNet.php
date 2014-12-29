@@ -21,6 +21,23 @@ class BattleNet
     $this->_responseLocale = $responseLocale;
   }
 
+  public function getAuction($realmSlug)
+  {
+    $data = $this->_grab('auction/data/' . $realmSlug);
+
+    if(!isset($data['files'][0]['url']) || !isset($data['files'][0]['lastModified']))
+    {
+      throw new BattleNetException('Missing fields from API');
+    }
+
+    return new AuctionResponse(
+      [
+        'url'          => $data['files'][0]['url'],
+        'lastModified' => $data['files'][0]['lastModified']
+      ]
+    );
+  }
+
   private function _makeApiUrl($path)
   {
     return 'https://' . $this->_serverLocale . '.api.battle.net/wow/' . $path;
