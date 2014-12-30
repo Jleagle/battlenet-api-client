@@ -4,6 +4,7 @@ namespace Jleagle\BattleNet;
 use GuzzleHttp\Client;
 use Jleagle\BattleNet\Enums\ServerLocale;
 use Jleagle\BattleNet\Exceptions\BattleNetException;
+use Jleagle\BattleNet\Responses\AchievementResponse;
 use Jleagle\BattleNet\Responses\AuctionResponse;
 use Jleagle\BattleNet\Responses\RealmResponse;
 
@@ -28,12 +29,23 @@ class BattleNet
   }
 
   /**
+   * @param int $achievementId
+   *
+   * @return AchievementResponse
+   */
+  public function getAchievement($achievementId)
+  {
+    $data = $this->_grab('achievement/' . $achievementId);
+    return new AchievementResponse($data);
+  }
+
+  /**
    * @param string $realmSlug
    *
    * @return AuctionResponse
    * @throws BattleNetException
    */
-  public function getAuction($realmSlug)
+  public function getAuctions($realmSlug)
   {
     $data = $this->_grab('auction/data/' . $realmSlug);
 
