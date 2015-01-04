@@ -158,7 +158,7 @@ class Warcraft extends BattleNet
       $this->_path . '/character/' . $realmSlug . '/' . $player,
       ['fields' => $fields]
     );
-    return new GuildResponse($data);
+    return new BaseResponse($data);// todo, make response
   }
 
   public function getPlayerAchievements()
