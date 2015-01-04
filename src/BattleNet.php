@@ -10,7 +10,7 @@ use Jleagle\BattleNet\Responses\BaseResponse;
 use Jleagle\BattleNet\Responses\GuildResponse;
 use Jleagle\BattleNet\Responses\RealmResponse;
 
-class BattleNet
+abstract class BattleNet
 {
   private $_apiKey;
   private $_serverLocation;
