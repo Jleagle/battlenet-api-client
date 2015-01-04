@@ -10,6 +10,8 @@ use Jleagle\BattleNet\Responses\RealmResponse;
 
 class Warcraft extends BattleNet
 {
+  private $_path = 'wow';
+
   /**
    * @param int $achievementId
    *
@@ -17,7 +19,7 @@ class Warcraft extends BattleNet
    */
   public function getAchievement($achievementId)
   {
-    $data = $this->_grab('achievement/' . $achievementId);
+    $data = $this->_grab($this->_path . '/achievement/' . $achievementId);
     return new AchievementResponse($data);
   }
 
@@ -29,7 +31,7 @@ class Warcraft extends BattleNet
    */
   public function getAuctions($realmSlug)
   {
-    $data = $this->_grab('auction/data/' . $realmSlug);
+    $data = $this->_grab($this->_path . '/auction/data/' . $realmSlug);
 
     if(!isset($data['files'][0]['url']) || !isset($data['files'][0]['lastModified']))
     {
@@ -46,19 +48,19 @@ class Warcraft extends BattleNet
 
   public function getBattleGroups()
   {
-    $data = $this->_grab('data/battlegroups');
+    $data = $this->_grab($this->_path . '/data/battlegroups');
     return new BaseResponse($data);// todo, make response
   }
 
   public function getBattlePetAbility($abilityId)
   {
-    $data = $this->_grab('battlePet/ability/' . $abilityId);
+    $data = $this->_grab($this->_path . '/battlePet/ability/' . $abilityId);
     return new BaseResponse($data);// todo, make response
   }
 
   public function getBattlePetSpecies($speciesId)
   {
-    $data = $this->_grab('battlePet/species/' . $speciesId);
+    $data = $this->_grab($this->_path . '/battlePet/species/' . $speciesId);
     return new BaseResponse($data);// todo, make response
   }
 
@@ -67,7 +69,7 @@ class Warcraft extends BattleNet
   )
   {
     $data = $this->_grab(
-      'battlePet/stats/' . $speciesId,
+      $this->_path . '/battlePet/stats/' . $speciesId,
       [
         'level'     => $level,
         'breedId'   => $breedId,
@@ -79,13 +81,13 @@ class Warcraft extends BattleNet
 
   public function getChallengeRealmLeaderBoard($realmSlug)
   {
-    $data = $this->_grab('challenge/' . $realmSlug);
+    $data = $this->_grab($this->_path . '/challenge/' . $realmSlug);
     return new BaseResponse($data);// todo, make response
   }
 
   public function getChallengeRegionLeaderBoard()
   {
-    $data = $this->_grab('challenge/region');
+    $data = $this->_grab($this->_path . '/challenge/region');
     return new BaseResponse($data);// todo, make response
   }
 
@@ -101,7 +103,7 @@ class Warcraft extends BattleNet
   {
     $fields = implode(',', $fields);
     $data   = $this->_grab(
-      'guild/' . $realmSlug . '/' . $guildName,
+      $this->_path . '/guild/' . $realmSlug . '/' . $guildName,
       ['fields' => $fields]
     );
     return new GuildResponse($data);
@@ -109,43 +111,43 @@ class Warcraft extends BattleNet
 
   public function getGuildAchievements()
   {
-    $data = $this->_grab('data/guild/achievements');
+    $data = $this->_grab($this->_path . '/data/guild/achievements');
     return new BaseResponse($data);// todo, make response
   }
 
   public function getGuildPerks()
   {
-    $data = $this->_grab('data/guild/perks');
+    $data = $this->_grab($this->_path . '/data/guild/perks');
     return new BaseResponse($data);// todo, make response
   }
 
   public function getGuildRewards()
   {
-    $data = $this->_grab('data/guild/rewards');
+    $data = $this->_grab($this->_path . '/data/guild/rewards');
     return new BaseResponse($data);// todo, make response
   }
 
   public function getItem($itemId)
   {
-    $data = $this->_grab('item/' . $itemId);
+    $data = $this->_grab($this->_path . '/item/' . $itemId);
     return new BaseResponse($data);// todo, make response
   }
 
   public function getItemClasses()
   {
-    $data = $this->_grab('data/item/classes');
+    $data = $this->_grab($this->_path . '/data/item/classes');
     return new BaseResponse($data);// todo, make response
   }
 
   public function getItemSet($setId)
   {
-    $data = $this->_grab('item/set/' . $setId);
+    $data = $this->_grab($this->_path . '/item/set/' . $setId);
     return new BaseResponse($data);// todo, make response
   }
 
   public function getPetTypes()
   {
-    $data = $this->_grab('data/pet/types');
+    $data = $this->_grab($this->_path . '/data/pet/types');
     return new BaseResponse($data);// todo, make response
   }
 
@@ -153,7 +155,7 @@ class Warcraft extends BattleNet
   {
     $fields = implode(',', $fields);
     $data   = $this->_grab(
-      'character/' . $realmSlug . '/' . $player,
+      $this->_path . '/character/' . $realmSlug . '/' . $player,
       ['fields' => $fields]
     );
     return new GuildResponse($data);
@@ -161,31 +163,31 @@ class Warcraft extends BattleNet
 
   public function getPlayerAchievements()
   {
-    $data = $this->_grab('data/character/achievements');
+    $data = $this->_grab($this->_path . '/data/character/achievements');
     return new BaseResponse($data);// todo, make response
   }
 
   public function getPlayerClasses()
   {
-    $data = $this->_grab('data/character/classes');
+    $data = $this->_grab($this->_path . '/data/character/classes');
     return new BaseResponse($data);// todo, make response
   }
 
   public function getPvpLeaderBoard($bracket)
   {
-    $data = $this->_grab('leaderboard/' . $bracket);
+    $data = $this->_grab($this->_path . '/leaderboard/' . $bracket);
     return new BaseResponse($data);// todo, make response
   }
 
   public function getQuest($questId)
   {
-    $data = $this->_grab('quest/' . $questId);
+    $data = $this->_grab($this->_path . '/quest/' . $questId);
     return new BaseResponse($data);// todo, make response
   }
 
   public function getRaces()
   {
-    $data = $this->_grab('data/character/races');
+    $data = $this->_grab($this->_path . '/data/character/races');
     return new BaseResponse($data);// todo, make response
   }
 
@@ -194,7 +196,7 @@ class Warcraft extends BattleNet
    */
   public function getRealms()
   {
-    $data = $this->_grab('realm/status');
+    $data = $this->_grab($this->_path . '/realm/status');
 
     $return = [];
     foreach($data['realms'] as $realm)
@@ -206,19 +208,19 @@ class Warcraft extends BattleNet
 
   public function getRecipe($recipeId)
   {
-    $data = $this->_grab('recipe/' . $recipeId);
+    $data = $this->_grab($this->_path . '/recipe/' . $recipeId);
     return new BaseResponse($data);// todo, make response
   }
 
   public function getSpell($spellId)
   {
-    $data = $this->_grab('spell/' . $spellId);
+    $data = $this->_grab($this->_path . '/spell/' . $spellId);
     return new BaseResponse($data);// todo, make response
   }
 
   public function getTalents()
   {
-    $data = $this->_grab('data/item/talents');
+    $data = $this->_grab($this->_path . '/data/item/talents');
     return new BaseResponse($data);// todo, make response
   }
 }

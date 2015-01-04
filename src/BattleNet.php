@@ -4,11 +4,6 @@ namespace Jleagle\BattleNet;
 use GuzzleHttp\Client;
 use Jleagle\BattleNet\Enums\ServerLocations;
 use Jleagle\BattleNet\Exceptions\BattleNetException;
-use Jleagle\BattleNet\Responses\AchievementResponse;
-use Jleagle\BattleNet\Responses\AuctionResponse;
-use Jleagle\BattleNet\Responses\BaseResponse;
-use Jleagle\BattleNet\Responses\GuildResponse;
-use Jleagle\BattleNet\Responses\RealmResponse;
 
 abstract class BattleNet
 {
@@ -85,6 +80,6 @@ abstract class BattleNet
    */
   private function _makeApiUrl($path)
   {
-    return 'https://' . $this->_serverLocation . '.api.battle.net/wow/' . $path;
+    return 'https://' . $this->_serverLocation . '.api.battle.net/' . $path;
   }
 }
