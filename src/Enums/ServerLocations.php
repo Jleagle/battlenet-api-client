@@ -1,7 +1,7 @@
 <?php
 namespace Jleagle\BattleNet\Enums;
 
-class ServerLocale extends BaseEnum
+class ServerLocations extends BaseEnum
 {
   const EU = 'eu';
   const KR = 'kr';

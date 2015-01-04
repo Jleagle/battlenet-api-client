@@ -1,7 +1,7 @@
 <?php
 namespace Jleagle\BattleNet\Enums;
 
-class ResponseLocale extends BaseEnum
+class ResponseLocales extends BaseEnum
 {
   // EU
   const EN_GB = 'en_GB';
