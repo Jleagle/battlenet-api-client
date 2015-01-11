@@ -29,7 +29,7 @@ Example API calls:
 $auctions = $warcraft->getAuctions('outland');
 
 // Retrieve realm list
-$realms = v->getRealms();
+$realms = $warcraft->getRealms();
 
 // Retrieve achievement details
 $achievement = $warcraft->getAchievement(2144);
