@@ -21,7 +21,7 @@ abstract class BattleNet
     $apiKey, $serverLocation = ServerLocations::US, $responseLocale = null
   )
   {
-    $this->_apiKey         = $apiKey;
+    $this->_apiKey = $apiKey;
     $this->_serverLocation = $serverLocation;
     $this->_responseLocale = $responseLocale;
   }
@@ -57,7 +57,7 @@ abstract class BattleNet
         ['jsonp' => $this->_jsonP]
       );
     }
-    $query   = array_merge_recursive($query, ['apikey' => $this->_apiKey]);
+    $query = array_merge_recursive($query, ['apikey' => $this->_apiKey]);
     $options = array_merge_recursive($options, ['query' => $query]);
 
     $res = $client->get($this->_makeApiUrl($path), $options);

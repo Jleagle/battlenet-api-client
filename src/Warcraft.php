@@ -102,7 +102,7 @@ class Warcraft extends BattleNet
   public function getGuild($realmSlug, $guildName, $fields = [])
   {
     $fields = implode(',', $fields);
-    $data   = $this->_grab(
+    $data = $this->_grab(
       $this->_path . '/guild/' . $realmSlug . '/' . $guildName,
       ['fields' => $fields]
     );
@@ -154,7 +154,7 @@ class Warcraft extends BattleNet
   public function getPlayer($realmSlug, $player, $fields = [])
   {
     $fields = implode(',', $fields);
-    $data   = $this->_grab(
+    $data = $this->_grab(
       $this->_path . '/character/' . $realmSlug . '/' . $player,
       ['fields' => $fields]
     );
@@ -192,7 +192,7 @@ class Warcraft extends BattleNet
   }
 
   /**
-   * @return array
+   * @return RealmResponse[]
    */
   public function getRealms()
   {

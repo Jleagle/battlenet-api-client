@@ -9,19 +9,25 @@ class StarCraft extends BattleNet
 
   public function getProfile($id, $region, $name)
   {
-    $data = $this->_grab($this->_path . '/profile/' . $id.'/'.$region.'/'.$name);
+    $data = $this->_grab(
+      $this->_path . '/profile/' . $id . '/' . $region . '/' . $name
+    );
     return new BaseResponse($data);// todo, make response
   }
 
   public function getProfileLadders($id, $region, $name)
   {
-    $data = $this->_grab($this->_path . '/profile/' . $id.'/'.$region.'/'.$name.'/ladders');
+    $data = $this->_grab(
+      $this->_path . '/profile/' . $id . '/' . $region . '/' . $name . '/ladders'
+    );
     return new BaseResponse($data);// todo, make response
   }
 
   public function getProfileMatches($id, $region, $name)
   {
-    $data = $this->_grab($this->_path . '/profile/' . $id.'/'.$region.'/'.$name.'/matches');
+    $data = $this->_grab(
+      $this->_path . '/profile/' . $id . '/' . $region . '/' . $name . '/matches'
+    );
     return new BaseResponse($data);// todo, make response
   }
 

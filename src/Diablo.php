@@ -15,7 +15,9 @@ class Diablo extends BattleNet
 
   public function getHeroProfile($battleTag, $id)
   {
-    $data = $this->_grab($this->_path . '/profile/' . $battleTag.'/hero/'.$id);
+    $data = $this->_grab(
+      $this->_path . '/profile/' . $battleTag . '/hero/' . $id
+    );
     return new BaseResponse($data);// todo, make response
   }
 
