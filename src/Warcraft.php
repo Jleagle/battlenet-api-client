@@ -2,11 +2,11 @@
 namespace Jleagle\BattleNet;
 
 use Jleagle\BattleNet\Exceptions\BattleNetException;
-use Jleagle\BattleNet\Responses\AchievementResponse;
-use Jleagle\BattleNet\Responses\AuctionResponse;
 use Jleagle\BattleNet\Responses\BaseResponse;
-use Jleagle\BattleNet\Responses\GuildResponse;
-use Jleagle\BattleNet\Responses\RealmResponse;
+use Jleagle\BattleNet\Responses\Warcraft\AchievementResponse;
+use Jleagle\BattleNet\Responses\Warcraft\AuctionResponse;
+use Jleagle\BattleNet\Responses\Warcraft\GuildResponse;
+use Jleagle\BattleNet\Responses\Warcraft\RealmResponse;
 
 class Warcraft extends BattleNet
 {
