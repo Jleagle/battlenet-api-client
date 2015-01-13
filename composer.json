@@ -1,5 +1,23 @@
 {
   "name": "jleagle/battlenet-api-client",
+  "keywords": [
+    "battle",
+    "battlenet",
+    "battle.net",
+    "blizzard",
+    "warcraft",
+    "starcraft",
+    "diablo",
+    "wow"
+  ],
+  "description": "A package to retrieve information from the Battle.net API",
+  "authors": [
+    {
+      "name": "James Eagle",
+      "email": "jimeagle@gmail.com",
+      "homepage": "http://jimeagle.com"
+    }
+  ],
   "require": {
     "guzzlehttp/guzzle": "~5.0"
   },
