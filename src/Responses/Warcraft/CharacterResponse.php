@@ -32,4 +32,5 @@ class CharacterResponse extends BaseResponse
   public $pvp;
   public $quests;
   public $audit;
+  public $totalHonorableKills;
 }

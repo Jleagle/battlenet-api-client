@@ -6,6 +6,7 @@ use Jleagle\BattleNet\Request\BattleNet;
 use Jleagle\BattleNet\Responses\BaseResponse;
 use Jleagle\BattleNet\Responses\Warcraft\AchievementResponse;
 use Jleagle\BattleNet\Responses\Warcraft\AuctionResponse;
+use Jleagle\BattleNet\Responses\Warcraft\CharacterResponse;
 use Jleagle\BattleNet\Responses\Warcraft\GuildResponse;
 use Jleagle\BattleNet\Responses\Warcraft\RealmResponse;
 
@@ -160,11 +161,11 @@ class Warcraft extends BattleNet
       ['fields' => $fields]
     );
 
-    $data['thumbnail'] = 'http://' . $this->_serverLocation .
-      '.battle.net/static-render/' . $this->_serverLocation .
-      '/' . $data['thumbnail'];
+    $data['thumbnail'] = 'http://' . $this->_serverLocation . '.battle.net/static-render/' . $this->_serverLocation . '/' . $data['thumbnail'];
+    $data['characterClass'] = $data['class'];
+    unset($data['class']);
 
-    return new BaseResponse($data);// todo, make response
+    return new CharacterResponse($data);// todo, make response
   }
 
   public function getCharacterAchievements()
