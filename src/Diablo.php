@@ -1,6 +1,7 @@
 <?php
 namespace Jleagle\BattleNet;
 
+use Jleagle\BattleNet\Request\BattleNet;
 use Jleagle\BattleNet\Responses\BaseResponse;
 
 class Diablo extends BattleNet

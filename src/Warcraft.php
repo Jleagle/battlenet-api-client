@@ -2,6 +2,7 @@
 namespace Jleagle\BattleNet;
 
 use Jleagle\BattleNet\Exceptions\BattleNetException;
+use Jleagle\BattleNet\Request\BattleNet;
 use Jleagle\BattleNet\Responses\BaseResponse;
 use Jleagle\BattleNet\Responses\Warcraft\AchievementResponse;
 use Jleagle\BattleNet\Responses\Warcraft\AuctionResponse;
@@ -151,23 +152,28 @@ class Warcraft extends BattleNet
     return new BaseResponse($data);// todo, make response
   }
 
-  public function getPlayer($realmSlug, $player, $fields = [])
+  public function getCharacter($realmSlug, $character, $fields = [])
   {
     $fields = implode(',', $fields);
     $data = $this->_grab(
-      $this->_path . '/character/' . $realmSlug . '/' . $player,
+      $this->_path . '/character/' . $realmSlug . '/' . $character,
       ['fields' => $fields]
     );
+
+    $data['thumbnail'] = 'http://' . $this->_serverLocation .
+      '.battle.net/static-render/' . $this->_serverLocation .
+      '/' . $data['thumbnail'];
+
     return new BaseResponse($data);// todo, make response
   }
 
-  public function getPlayerAchievements()
+  public function getCharacterAchievements()
   {
     $data = $this->_grab($this->_path . '/data/character/achievements');
     return new BaseResponse($data);// todo, make response
   }
 
-  public function getPlayerClasses()
+  public function getCharacterClasses()
   {
     $data = $this->_grab($this->_path . '/data/character/classes');
     return new BaseResponse($data);// todo, make response

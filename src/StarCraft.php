@@ -1,6 +1,7 @@
 <?php
 namespace Jleagle\BattleNet;
 
+use Jleagle\BattleNet\Request\BattleNet;
 use Jleagle\BattleNet\Responses\BaseResponse;
 use Jleagle\BattleNet\Responses\StarCraft\AchievementResponse;
 use Jleagle\BattleNet\Responses\StarCraft\RewardResponse;

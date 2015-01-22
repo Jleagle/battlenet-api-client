@@ -1,16 +1,16 @@
 <?php
-namespace Jleagle\BattleNet;
+namespace Jleagle\BattleNet\Request;
 
-use GuzzleHttp\Client;
+use GuzzleHttp\Client as Guzzle;
 use Jleagle\BattleNet\Enums\ServerLocations;
 use Jleagle\BattleNet\Exceptions\BattleNetException;
 
 abstract class BattleNet
 {
-  private $_apiKey;
-  private $_serverLocation;
-  private $_responseLocale;
-  private $_jsonP;
+  use BattleNetTrait;
+
+  protected $_apiKey;
+  protected $_responseLocale;
 
   /**
    * @param string $apiKey
@@ -26,11 +26,6 @@ abstract class BattleNet
     $this->_responseLocale = $responseLocale;
   }
 
-  public function setJsonp($callback)
-  {
-    $this->_jsonP = $callback;
-  }
-
   /**
    * @param string $path
    * @param array  $options
@@ -41,8 +36,6 @@ abstract class BattleNet
    */
   protected function _grab($path, $query = [], $options = [])
   {
-    $client = new Client();
-
     if($this->_responseLocale)
     {
       $query = array_merge_recursive(
@@ -60,6 +53,7 @@ abstract class BattleNet
     $query = array_merge_recursive($query, ['apikey' => $this->_apiKey]);
     $options = array_merge_recursive($options, ['query' => $query]);
 
+    $client = new Guzzle();
     $res = $client->get($this->_makeApiUrl($path), $options);
 
     if($res->getStatusCode() != 200)
@@ -73,13 +67,4 @@ abstract class BattleNet
     return $res->json();
   }
 
-  /**
-   * @param string $path
-   *
-   * @return string
-   */
-  private function _makeApiUrl($path)
-  {
-    return 'https://' . $this->_serverLocation . '.api.battle.net/' . $path;
-  }
 }
