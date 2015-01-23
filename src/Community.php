@@ -6,13 +6,13 @@ use Jleagle\BattleNet\Responses\BaseResponse;
 
 class Community extends BattleNetAuth
 {
-  public function getAccountId($accessToken)
+  public function getStarCraftUser($accessToken)
   {
     $data = $this->_grab('sc2/profile/user', $accessToken);
     return new BaseResponse($data);// todo, make response
   }
 
-  public function getBattleTag($accessToken)
+  public function getWarcraftCharacters($accessToken)
   {
     $data = $this->_grab('wow/user/characters', $accessToken);
     return new BaseResponse($data);// todo, make response
