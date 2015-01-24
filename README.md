@@ -4,11 +4,13 @@ battlenet-api-client
 A package to retrieve information from the Battle.net API (https://dev.battle.net/)
 
 ###### Pros
-- Code hinting (in progress)
-- Contains all game APIs (Diablo 3, StarCraft 2 and WoW) 
+- Code hinting
+- Contains all game APIs (Diablo 3, StarCraft 2 and WoW)
+- Contains authed account and community APIs, with helper functions to get OAuth tokens
 
-###### Cons
-- Does not contain account related end points
+###### Todo
+- Finish all responses
+- Throw better exceptions on non 200 response
 
 ### Usage
 
