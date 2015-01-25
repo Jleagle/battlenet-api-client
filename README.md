@@ -10,7 +10,6 @@ A package to retrieve information from the Battle.net API (https://dev.battle.ne
 
 ###### Todo
 - Finish all responses
-- Throw better exceptions on non 200 response
 
 ### Usage
 

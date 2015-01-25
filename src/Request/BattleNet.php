@@ -2,6 +2,7 @@
 namespace Jleagle\BattleNet\Request;
 
 use GuzzleHttp\Client as Guzzle;
+use GuzzleHttp\Exception\ClientException;
 use Jleagle\BattleNet\Enums\ServerLocations;
 use Jleagle\BattleNet\Exceptions\BattleNetException;
 
@@ -38,33 +39,28 @@ abstract class BattleNet
   {
     if($this->_responseLocale)
     {
-      $query = array_merge_recursive(
-        $query,
-        ['locale' => $this->_responseLocale]
-      );
+      $query['locale'] = $this->_responseLocale;
     }
+
     if($this->_jsonP)
     {
-      $query = array_merge_recursive(
-        $query,
-        ['jsonp' => $this->_jsonP]
-      );
+      $query['jsonp'] = $this->_jsonP;
     }
-    $query = array_merge_recursive($query, ['apikey' => $this->_apiKey]);
-    $options = array_merge_recursive($options, ['query' => $query]);
+
+    $query['apikey'] = $this->_apiKey;
+    $options['query'] = $query;
 
     $client = new Guzzle();
-    $res = $client->get($this->_makeApiUrl($path), $options);
-
-    if($res->getStatusCode() != 200)
+    try
     {
-      throw new BattleNetException(
-        'Invalid status code from API',
-        $res->getStatusCode()
-      );
+      $res = $client->get($this->_makeApiUrl($path), $options);
+    }
+    catch(ClientException $e)
+    {
+      $message = $e->getResponse()->json()['reason'];
+      throw new BattleNetException($message);
     }
 
     return $res->json();
   }
-
 }

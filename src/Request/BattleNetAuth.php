@@ -2,6 +2,7 @@
 namespace Jleagle\BattleNet\Request;
 
 use GuzzleHttp\Client as Guzzle;
+use GuzzleHttp\Exception\ClientException;
 use Jleagle\BattleNet\Enums\AuthScopes;
 use Jleagle\BattleNet\Enums\ServerLocations;
 use Jleagle\BattleNet\Exceptions\BattleNetException;
@@ -101,20 +102,17 @@ abstract class BattleNetAuth
    */
   protected function _grab($path, $accessToken)
   {
-    $client = new Guzzle();
-    $res = $client->get(
-      $this->_makeApiUrl($path),
-      [
-        'query' => ['access_token' => $accessToken]
-      ]
-    );
+    $options = ['query' => ['access_token' => $accessToken]];
 
-    if($res->getStatusCode() != 200)
+    $client = new Guzzle();
+    try
     {
-      throw new BattleNetException(
-        'Invalid status code from API',
-        $res->getStatusCode()
-      );
+      $res = $client->get($this->_makeApiUrl($path), $options);
+    }
+    catch(ClientException $e)
+    {
+      $message = $e->getResponse()->json()['reason'];
+      throw new BattleNetException($message);
     }
 
     return $res->json();
