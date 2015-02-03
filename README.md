@@ -1,6 +1,11 @@
 battlenet-api-client
 ====================
 
+[![Build Status (Scrutinizer)](https://scrutinizer-ci.com/g/Jleagle/battlenet-api-client/badges/build.png)](https://scrutinizer-ci.com/g/Jleagle/battlenet-api-client)
+[![Code Quality (scrutinizer)](https://scrutinizer-ci.com/g/Jleagle/battlenet-api-client/badges/quality-score.png)](https://scrutinizer-ci.com/g/Jleagle/battlenet-api-client)
+[![Latest Stable Version](https://poser.pugx.org/Jleagle/battlenet-api-client/v/stable.png)](https://packagist.org/packages/Jleagle/battlenet-api-client)
+[![Latest Unstable Version](https://poser.pugx.org/Jleagle/battlenet-api-client/v/unstable.png)](https://packagist.org/packages/Jleagle/battlenet-api-client)
+
 A package to retrieve information from the Battle.net API (https://dev.battle.net/)
 
 ###### Pros
