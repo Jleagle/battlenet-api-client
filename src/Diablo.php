@@ -19,7 +19,7 @@ class Diablo extends BattleNet
    */
   public function getCareerProfile($battleTag)
   {
-    $data = $this->_grab($this->_path . '/profile/' . $battleTag);
+    $data = $this->_grab($this->_path . '/profile/' . urlencode($battleTag));
     return new CareerProfileResponse($data);
   }
 
@@ -32,7 +32,7 @@ class Diablo extends BattleNet
   public function getHeroProfile($battleTag, $id)
   {
     $data = $this->_grab(
-      $this->_path . '/profile/' . $battleTag . '/hero/' . $id
+      $this->_path . '/profile/' . urlencode($battleTag) . '/hero/' . $id
     );
     return new HeroProfileResponse($data);
   }
@@ -53,7 +53,7 @@ class Diablo extends BattleNet
    *
    * @return FollowerResponse
    */
-  public function getFollower($follower)
+  public function getFollower($follower) // Todo, make enum
   {
     $data = $this->_grab($this->_path . '/data/follower/' . $follower);
     return new FollowerResponse($data);
@@ -64,7 +64,7 @@ class Diablo extends BattleNet
    *
    * @return ArtisanResponse
    */
-  public function getArtisan($artisan)
+  public function getArtisan($artisan) // Todo, make enum
   {
     $data = $this->_grab($this->_path . '/data/artisan/' . $artisan);
     return new ArtisanResponse($data);
