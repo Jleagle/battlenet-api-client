@@ -111,7 +111,8 @@ abstract class BattleNetAuth
     }
     catch(ClientException $e)
     {
-      $message = $e->getResponse()->json()['reason'];
+      $json = $e->getResponse()->json();
+      $message = isset($json['reason']) ? $json['reason'] : $e->getMessage();
       throw new BattleNetException($message);
     }
 

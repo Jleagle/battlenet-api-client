@@ -23,7 +23,7 @@ class StarCraft extends BattleNet
   public function getProfile($id, $region, $name)
   {
     $data = $this->_grab(
-      $this->_path . '/profile/' . $id . '/' . $region . '/' . $name
+      $this->_path . '/profile/' . $id . '/' . $region . '/' . $name . '/'
     );
     return new ProfileResponse($data);
   }

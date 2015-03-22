@@ -1,6 +1,8 @@
 <?php
 namespace Jleagle\BattleNet\Responses\StarCraft;
 
+use Jleagle\BattleNet\Responses\BaseResponse;
+
 class LadderMemberResponse extends BaseResponse
 {
   public $character;
