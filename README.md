@@ -13,9 +13,6 @@ A package to retrieve information from the Battle.net API (https://dev.battle.ne
 - Contains all game APIs (Diablo 3, StarCraft 2 and WoW)
 - Contains authed account and community APIs, with helper functions to get OAuth tokens
 
-###### Todo
-- Finish all responses
-
 ### Usage
 
 Instantiate the package using your games class, passing though your API key, ServerLocation and ResponseLocale:

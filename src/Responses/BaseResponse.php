@@ -1,7 +1,7 @@
 <?php
 namespace Jleagle\BattleNet\Responses;
 
-class BaseResponse
+abstract class BaseResponse
 {
   public function __construct(array $data)
   {
