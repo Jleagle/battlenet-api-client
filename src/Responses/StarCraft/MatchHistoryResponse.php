@@ -1,7 +1,9 @@
 <?php
 namespace Jleagle\BattleNet\Responses\StarCraft;
 
-class MatchHistoryResponse
+use Jleagle\BattleNet\Responses\BaseResponse;
+
+class MatchHistoryResponse extends BaseResponse
 {
   public $map;
   public $type;

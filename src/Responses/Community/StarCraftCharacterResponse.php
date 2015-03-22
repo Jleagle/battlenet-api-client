@@ -1,7 +1,9 @@
 <?php
 namespace Jleagle\BattleNet\Responses\Community;
 
-class StarCraftCharacterResponse
+use Jleagle\BattleNet\Responses\BaseResponse;
+
+class StarCraftCharacterResponse extends BaseResponse
 {
   public $id;
   public $realm;
