@@ -1,7 +1,9 @@
 <?php
 namespace Jleagle\BattleNet\Responses\Diablo;
 
-class ItemResponse
+use Jleagle\BattleNet\Responses\BaseResponse;
+
+class ItemResponse extends BaseResponse
 {
   public $id;
   public $name;
