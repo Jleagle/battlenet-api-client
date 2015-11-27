@@ -11,6 +11,7 @@
     "wow"
   ],
   "description": "A package to retrieve information from the Battle.net API",
+  "license": "MIT",
   "authors": [
     {
       "name": "James Eagle",
@@ -19,11 +20,18 @@
     }
   ],
   "require": {
-    "guzzlehttp/guzzle": "~5.0"
+    "php": ">=5.4",
+    "jleagle/curl-wrapper": "~0.0"
   },
   "autoload": {
     "psr-4": {
       "Jleagle\\BattleNet\\": "src/"
     }
-  }
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:jleagle/curl-wrapper.git"
+    }
+  ]
 }

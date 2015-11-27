@@ -1,11 +1,11 @@
 <?php
 namespace Jleagle\BattleNet;
 
-use Jleagle\BattleNet\Request\BattleNetAuth;
+use Jleagle\BattleNet\Request\AbstractBattleNetAuth;
 use Jleagle\BattleNet\Responses\Community\StarCraftCharacterResponse;
 use Jleagle\BattleNet\Responses\Community\WarcraftCharacterResponse;
 
-class Community extends BattleNetAuth
+class Community extends AbstractBattleNetAuth
 {
   /**
    * @param string $accessToken
@@ -14,7 +14,7 @@ class Community extends BattleNetAuth
    */
   public function getStarCraftUser($accessToken)
   {
-    $data = $this->_grab('sc2/profile/user', $accessToken);
+    $data = $this->_get('sc2/profile/user', $accessToken);
 
     $return = [];
     foreach($data['characters'] as $character)
@@ -31,7 +31,7 @@ class Community extends BattleNetAuth
    */
   public function getWarcraftCharacters($accessToken)
   {
-    $data = $this->_grab('wow/user/characters', $accessToken);
+    $data = $this->_get('wow/user/characters', $accessToken);
 
     $return = [];
     foreach($data['characters'] as $character)

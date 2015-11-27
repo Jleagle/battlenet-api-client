@@ -1,7 +1,7 @@
 <?php
 namespace Jleagle\BattleNet;
 
-use Jleagle\BattleNet\Request\BattleNet;
+use Jleagle\BattleNet\Request\AbstractBattleNet;
 use Jleagle\BattleNet\Responses\StarCraft\AchievementResponse;
 use Jleagle\BattleNet\Responses\StarCraft\LadderMemberResponse;
 use Jleagle\BattleNet\Responses\StarCraft\LaddersResponse;
@@ -9,7 +9,7 @@ use Jleagle\BattleNet\Responses\StarCraft\MatchHistoryResponse;
 use Jleagle\BattleNet\Responses\StarCraft\ProfileResponse;
 use Jleagle\BattleNet\Responses\StarCraft\RewardResponse;
 
-class StarCraft extends BattleNet
+class StarCraft extends AbstractBattleNet
 {
   private $_path = 'sc2';
 
@@ -22,7 +22,7 @@ class StarCraft extends BattleNet
    */
   public function getProfile($id, $region, $name)
   {
-    $data = $this->_grab(
+    $data = $this->_get(
       $this->_path . '/profile/' . $id . '/' . $region . '/' . $name . '/'
     );
     return new ProfileResponse($data);
@@ -37,7 +37,7 @@ class StarCraft extends BattleNet
    */
   public function getProfileLadders($id, $region, $name)
   {
-    $data = $this->_grab(
+    $data = $this->_get(
       $this->_path . '/profile/' . $id . '/' . $region . '/' . $name . '/ladders'
     );
     return new LaddersResponse($data);
@@ -52,7 +52,7 @@ class StarCraft extends BattleNet
    */
   public function getProfileMatches($id, $region, $name)
   {
-    $data = $this->_grab(
+    $data = $this->_get(
       $this->_path . '/profile/' . $id . '/' . $region . '/' . $name . '/matches'
     );
 
@@ -71,7 +71,7 @@ class StarCraft extends BattleNet
    */
   public function getLadder($ladderId) // todo, make enum
   {
-    $data = $this->_grab($this->_path . '/ladder/' . $ladderId);
+    $data = $this->_get($this->_path . '/ladder/' . $ladderId);
 
     $return = [];
     foreach($data['ladderMembers'] as $member)
@@ -86,7 +86,7 @@ class StarCraft extends BattleNet
    */
   public function getAchievements()
   {
-    $data = $this->_grab($this->_path . '/data/achievements');
+    $data = $this->_get($this->_path . '/data/achievements');
     $categories = $this->_restructureCategories($data['categories']);
 
     $achievements = [];
@@ -141,7 +141,7 @@ class StarCraft extends BattleNet
    */
   public function getRewards()
   {
-    $data = $this->_grab($this->_path . '/data/rewards');
+    $data = $this->_get($this->_path . '/data/rewards');
 
     $return = [];
     foreach($data as $type => $rewards)

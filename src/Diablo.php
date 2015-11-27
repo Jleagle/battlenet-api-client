@@ -1,14 +1,14 @@
 <?php
 namespace Jleagle\BattleNet;
 
-use Jleagle\BattleNet\Request\BattleNet;
+use Jleagle\BattleNet\Request\AbstractBattleNet;
 use Jleagle\BattleNet\Responses\Diablo\ArtisanResponse;
 use Jleagle\BattleNet\Responses\Diablo\CareerProfileResponse;
 use Jleagle\BattleNet\Responses\Diablo\FollowerResponse;
 use Jleagle\BattleNet\Responses\Diablo\HeroProfileResponse;
 use Jleagle\BattleNet\Responses\Diablo\ItemResponse;
 
-class Diablo extends BattleNet
+class Diablo extends AbstractBattleNet
 {
   private $_path = 'd3';
 
@@ -19,7 +19,7 @@ class Diablo extends BattleNet
    */
   public function getCareerProfile($battleTag)
   {
-    $data = $this->_grab($this->_path . '/profile/' . urlencode($battleTag));
+    $data = $this->_get($this->_path . '/profile/' . urlencode($battleTag));
     return new CareerProfileResponse($data);
   }
 
@@ -31,7 +31,7 @@ class Diablo extends BattleNet
    */
   public function getHeroProfile($battleTag, $id)
   {
-    $data = $this->_grab(
+    $data = $this->_get(
       $this->_path . '/profile/' . urlencode($battleTag) . '/hero/' . $id
     );
     return new HeroProfileResponse($data);
@@ -44,7 +44,7 @@ class Diablo extends BattleNet
    */
   public function getItem($itemDataString)
   {
-    $data = $this->_grab($this->_path . '/data/item/' . $itemDataString);
+    $data = $this->_get($this->_path . '/data/item/' . $itemDataString);
     return new ItemResponse($data);
   }
 
@@ -55,7 +55,7 @@ class Diablo extends BattleNet
    */
   public function getFollower($follower) // Todo, make enum
   {
-    $data = $this->_grab($this->_path . '/data/follower/' . $follower);
+    $data = $this->_get($this->_path . '/data/follower/' . $follower);
     return new FollowerResponse($data);
   }
 
@@ -66,7 +66,7 @@ class Diablo extends BattleNet
    */
   public function getArtisan($artisan) // Todo, make enum
   {
-    $data = $this->_grab($this->_path . '/data/artisan/' . $artisan);
+    $data = $this->_get($this->_path . '/data/artisan/' . $artisan);
     return new ArtisanResponse($data);
   }
 }

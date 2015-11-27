@@ -2,7 +2,7 @@
 namespace Jleagle\BattleNet;
 
 use Jleagle\BattleNet\Exceptions\BattleNetException;
-use Jleagle\BattleNet\Request\BattleNet;
+use Jleagle\BattleNet\Request\AbstractBattleNet;
 use Jleagle\BattleNet\Responses\Warcraft\AchievementResponse;
 use Jleagle\BattleNet\Responses\Warcraft\AuctionResponse;
 use Jleagle\BattleNet\Responses\Warcraft\BattleGroupResponse;
@@ -30,7 +30,7 @@ use Jleagle\BattleNet\Responses\Warcraft\RecipeResponse;
 use Jleagle\BattleNet\Responses\Warcraft\SpellResponse;
 use Jleagle\BattleNet\Responses\Warcraft\TalentResponse;
 
-class Warcraft extends BattleNet
+class Warcraft extends AbstractBattleNet
 {
   private $_path = 'wow';
 
@@ -41,7 +41,7 @@ class Warcraft extends BattleNet
    */
   public function getAchievement($achievementId)
   {
-    $data = $this->_grab($this->_path . '/achievement/' . $achievementId);
+    $data = $this->_get($this->_path . '/achievement/' . $achievementId);
     return new AchievementResponse($data);
   }
 
@@ -53,7 +53,7 @@ class Warcraft extends BattleNet
    */
   public function getAuctions($realmSlug)
   {
-    $data = $this->_grab($this->_path . '/auction/data/' . $realmSlug);
+    $data = $this->_get($this->_path . '/auction/data/' . $realmSlug);
 
     if(!isset($data['files'][0]['url']) || !isset($data['files'][0]['lastModified']))
     {
@@ -73,7 +73,7 @@ class Warcraft extends BattleNet
    */
   public function getBattleGroups()
   {
-    $data = $this->_grab($this->_path . '/data/battlegroups');
+    $data = $this->_get($this->_path . '/data/battlegroups');
 
     $return = [];
     foreach($data['battlegroups'] as $battlegroup)
@@ -90,7 +90,7 @@ class Warcraft extends BattleNet
    */
   public function getBattlePetAbility($abilityId)
   {
-    $data = $this->_grab($this->_path . '/battlePet/ability/' . $abilityId);
+    $data = $this->_get($this->_path . '/battlePet/ability/' . $abilityId);
     return new BattlePetAbilityResponse($data);
   }
 
@@ -101,7 +101,7 @@ class Warcraft extends BattleNet
    */
   public function getBattlePetSpecies($speciesId)
   {
-    $data = $this->_grab($this->_path . '/battlePet/species/' . $speciesId);
+    $data = $this->_get($this->_path . '/battlePet/species/' . $speciesId);
     return new BattlePetSpeciesResponse($data);
   }
 
@@ -117,7 +117,7 @@ class Warcraft extends BattleNet
     $speciesId, $level = 1, $breedId = 3, $qualityId = 1
   )
   {
-    $data = $this->_grab(
+    $data = $this->_get(
       $this->_path . '/battlePet/stats/' . $speciesId,
       [
         'level'     => $level,
@@ -135,7 +135,7 @@ class Warcraft extends BattleNet
    */
   public function getChallengeRealmLeaderboard($realmSlug)
   {
-    $data = $this->_grab($this->_path . '/challenge/' . $realmSlug);
+    $data = $this->_get($this->_path . '/challenge/' . $realmSlug);
     return new ChallengeRealmResponse($data);
   }
 
@@ -144,7 +144,7 @@ class Warcraft extends BattleNet
    */
   public function getChallengeRegionLeaderboard()
   {
-    $data = $this->_grab($this->_path . '/challenge/region');
+    $data = $this->_get($this->_path . '/challenge/region');
     return new ChallengeRegionResponse($data);
   }
 
@@ -158,7 +158,7 @@ class Warcraft extends BattleNet
   public function getGuild($realmSlug, $guildName, $fields = [])
   {
     $fields = implode(',', $fields);
-    $data = $this->_grab(
+    $data = $this->_get(
       $this->_path . '/guild/' . $realmSlug . '/' . $guildName,
       ['fields' => $fields]
     );
@@ -170,7 +170,7 @@ class Warcraft extends BattleNet
    */
   public function getGuildAchievements()
   {
-    $data = $this->_grab($this->_path . '/data/guild/achievements');
+    $data = $this->_get($this->_path . '/data/guild/achievements');
     return new GuildAchievementsResponse($data);
   }
 
@@ -179,7 +179,7 @@ class Warcraft extends BattleNet
    */
   public function getGuildPerks()
   {
-    $data = $this->_grab($this->_path . '/data/guild/perks');
+    $data = $this->_get($this->_path . '/data/guild/perks');
     return new GuildPerksResponse($data);
   }
 
@@ -188,7 +188,7 @@ class Warcraft extends BattleNet
    */
   public function getGuildRewards()
   {
-    $data = $this->_grab($this->_path . '/data/guild/rewards');
+    $data = $this->_get($this->_path . '/data/guild/rewards');
     return new GuildRewardsResponse($data);
   }
 
@@ -199,7 +199,7 @@ class Warcraft extends BattleNet
    */
   public function getItem($itemId)
   {
-    $data = $this->_grab($this->_path . '/item/' . $itemId);
+    $data = $this->_get($this->_path . '/item/' . $itemId);
     return new ItemResponse($data);
   }
 
@@ -208,7 +208,7 @@ class Warcraft extends BattleNet
    */
   public function getItemClasses()
   {
-    $data = $this->_grab($this->_path . '/data/item/classes');
+    $data = $this->_get($this->_path . '/data/item/classes');
     return new ItemClassesResponse($data);
   }
 
@@ -219,7 +219,7 @@ class Warcraft extends BattleNet
    */
   public function getItemSet($setId)
   {
-    $data = $this->_grab($this->_path . '/item/set/' . $setId);
+    $data = $this->_get($this->_path . '/item/set/' . $setId);
     return new ItemSetResponse($data);
   }
 
@@ -228,7 +228,7 @@ class Warcraft extends BattleNet
    */
   public function getPetTypes()
   {
-    $data = $this->_grab($this->_path . '/data/pet/types');
+    $data = $this->_get($this->_path . '/data/pet/types');
 
     $return = [];
     foreach($data['petTypes'] as $petType)
@@ -248,7 +248,7 @@ class Warcraft extends BattleNet
   public function getCharacter($realmSlug, $character, $fields = [])
   {
     $fields = implode(',', $fields);
-    $data = $this->_grab(
+    $data = $this->_get(
       $this->_path . '/character/' . $realmSlug . '/' . $character,
       ['fields' => $fields]
     );
@@ -265,7 +265,7 @@ class Warcraft extends BattleNet
    */
   public function getCharacterAchievements()
   {
-    $data = $this->_grab($this->_path . '/data/character/achievements');
+    $data = $this->_get($this->_path . '/data/character/achievements');
     return new CharacterAchievementsResponse($data);
   }
 
@@ -274,7 +274,7 @@ class Warcraft extends BattleNet
    */
   public function getCharacterClasses()
   {
-    $data = $this->_grab($this->_path . '/data/character/classes');
+    $data = $this->_get($this->_path . '/data/character/classes');
 
     $return = [];
     foreach($data['classes'] as $class)
@@ -291,7 +291,7 @@ class Warcraft extends BattleNet
    */
   public function getPvpLeaderboard($bracket)
   {
-    $data = $this->_grab($this->_path . '/leaderboard/' . $bracket);
+    $data = $this->_get($this->_path . '/leaderboard/' . $bracket);
 
     $return = [];
     foreach($data['rows'] as $class)
@@ -308,7 +308,7 @@ class Warcraft extends BattleNet
    */
   public function getQuest($questId)
   {
-    $data = $this->_grab($this->_path . '/quest/' . $questId);
+    $data = $this->_get($this->_path . '/quest/' . $questId);
     return new QuestResponse($data);
   }
 
@@ -317,7 +317,7 @@ class Warcraft extends BattleNet
    */
   public function getRaces()
   {
-    $data = $this->_grab($this->_path . '/data/character/races');
+    $data = $this->_get($this->_path . '/data/character/races');
 
     $return = [];
     foreach($data['races'] as $race)
@@ -332,7 +332,7 @@ class Warcraft extends BattleNet
    */
   public function getRealms()
   {
-    $data = $this->_grab($this->_path . '/realm/status');
+    $data = $this->_get($this->_path . '/realm/status');
 
     $return = [];
     foreach($data['realms'] as $realm)
@@ -349,7 +349,7 @@ class Warcraft extends BattleNet
    */
   public function getRecipe($recipeId)
   {
-    $data = $this->_grab($this->_path . '/recipe/' . $recipeId);
+    $data = $this->_get($this->_path . '/recipe/' . $recipeId);
     return new RecipeResponse($data);
   }
 
@@ -360,7 +360,7 @@ class Warcraft extends BattleNet
    */
   public function getSpell($spellId)
   {
-    $data = $this->_grab($this->_path . '/spell/' . $spellId);
+    $data = $this->_get($this->_path . '/spell/' . $spellId);
     return new SpellResponse($data);
   }
 
@@ -369,7 +369,7 @@ class Warcraft extends BattleNet
    */
   public function getTalents()
   {
-    $data = $this->_grab($this->_path . '/data/talents');
+    $data = $this->_get($this->_path . '/data/talents');
 
     $return = [];
     foreach($data as $talent)

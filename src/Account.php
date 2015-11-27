@@ -1,11 +1,11 @@
 <?php
 namespace Jleagle\BattleNet;
 
-use Jleagle\BattleNet\Request\BattleNetAuth;
+use Jleagle\BattleNet\Request\AbstractBattleNetAuth;
 use Jleagle\BattleNet\Responses\Account\BattleTagResponse;
 use Jleagle\BattleNet\Responses\Account\UserResponse;
 
-class Account extends BattleNetAuth
+class Account extends AbstractBattleNetAuth
 {
   private $_path = 'account';
 
@@ -17,7 +17,7 @@ class Account extends BattleNetAuth
    */
   public function getAccountId($accessToken)
   {
-    $data = $this->_grab($this->_path . '/user/id', $accessToken);
+    $data = $this->_get($this->_path . '/user/id', $accessToken);
     return new UserResponse($data);
   }
 
@@ -29,7 +29,7 @@ class Account extends BattleNetAuth
    */
   public function getBattleTag($accessToken)
   {
-    $data = $this->_grab($this->_path . '/user/battletag', $accessToken);
+    $data = $this->_get($this->_path . '/user/battletag', $accessToken);
     return new BattleTagResponse($data);
   }
 }

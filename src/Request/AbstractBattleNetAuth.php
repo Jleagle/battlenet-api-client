@@ -1,13 +1,14 @@
 <?php
 namespace Jleagle\BattleNet\Request;
 
-use GuzzleHttp\Client as Guzzle;
-use GuzzleHttp\Exception\ClientException;
 use Jleagle\BattleNet\Enums\AuthScopes;
 use Jleagle\BattleNet\Enums\ServerLocations;
 use Jleagle\BattleNet\Exceptions\BattleNetException;
+use Jleagle\CurlWrapper\Curl;
+use Jleagle\CurlWrapper\Exceptions\CurlException;
+use Jleagle\CurlWrapper\Exceptions\CurlInvalidJsonException;
 
-abstract class BattleNetAuth
+abstract class AbstractBattleNetAuth
 {
   use BattleNetTrait;
 
@@ -36,6 +37,9 @@ abstract class BattleNetAuth
     $this->_responseLocale = $responseLocale;
   }
 
+  /**
+   * @return string
+   */
   private function _getScopes()
   {
     $scopes = $this->_scopes;
@@ -46,6 +50,12 @@ abstract class BattleNetAuth
     return implode(' ', $scopes);
   }
 
+  /**
+   * @param string|null $state
+   * @param bool        $redirect
+   *
+   * @return string[]
+   */
   public function getCode($state = null, $redirect = false)
   {
     if(!$state)
@@ -73,24 +83,31 @@ abstract class BattleNetAuth
     return ['redirectUrl' => $url, 'state' => $state];
   }
 
+  /**
+   * Each code can only be used once
+   *
+   * @param string $code
+   *
+   * @return array
+   *
+   * @throws CurlException
+   * @throws CurlInvalidJsonException
+   */
   public function getAccessToken($code)
   {
     $url = 'https://' . $this->_serverLocation . '.battle.net/oauth/token';
-    $client = new Guzzle();
-    $response = $client->post(
-      $url,
-      [
-        'body' => [
-          'redirect_uri' => $this->_redirectUrl,
-          'scope'        => $this->_getScopes(),
-          'grant_type'   => 'authorization_code',
-          'code'         => $code,
-        ],
-        'auth' => [$this->_apiKey, $this->_apiSecret]
-      ]
-    );
 
-    return $response->json();
+    $data = [
+      'redirect_uri' => $this->_redirectUrl,
+      'scope'        => $this->_getScopes(),
+      'grant_type'   => 'authorization_code',
+      'code'         => $code,
+    ];
+
+    return Curl::post($url, $data)
+      ->setBasicAuth($this->_apiKey, $this->_apiSecret)
+      ->run()
+      ->getJson();
   }
 
   /**
@@ -100,22 +117,19 @@ abstract class BattleNetAuth
    * @return array
    * @throws BattleNetException
    */
-  protected function _grab($path, $accessToken)
+  protected function _get($path, $accessToken)
   {
-    $options = ['query' => ['access_token' => $accessToken]];
+    $data = ['access_token' => $accessToken];
 
-    $client = new Guzzle();
     try
     {
-      $res = $client->get($this->_makeApiUrl($path), $options);
+      return Curl::get($this->_makeApiUrl($path), $data)->run()->getJson();
     }
-    catch(ClientException $e)
+    catch(CurlException $e)
     {
-      $json = $e->getResponse()->json();
+      $json = $e->getResponse()->getJson();
       $message = isset($json['reason']) ? $json['reason'] : $e->getMessage();
       throw new BattleNetException($message);
     }
-
-    return $res->json();
   }
 }

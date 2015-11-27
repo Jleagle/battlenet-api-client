@@ -1,12 +1,12 @@
 <?php
 namespace Jleagle\BattleNet\Request;
 
-use GuzzleHttp\Client as Guzzle;
-use GuzzleHttp\Exception\ClientException;
 use Jleagle\BattleNet\Enums\ServerLocations;
 use Jleagle\BattleNet\Exceptions\BattleNetException;
+use Jleagle\CurlWrapper\Curl;
+use Jleagle\CurlWrapper\Exceptions\CurlException;
 
-abstract class BattleNet
+abstract class AbstractBattleNet
 {
   use BattleNetTrait;
 
@@ -29,39 +29,34 @@ abstract class BattleNet
 
   /**
    * @param string $path
-   * @param array  $options
-   * @param array  $query
+   * @param array  $data
    *
    * @return array
    * @throws BattleNetException
    */
-  protected function _grab($path, $query = [], $options = [])
+  protected function _get($path, $data = [])
   {
     if($this->_responseLocale)
     {
-      $query['locale'] = $this->_responseLocale;
+      $data['locale'] = $this->_responseLocale;
     }
 
     if($this->_jsonP)
     {
-      $query['jsonp'] = $this->_jsonP;
+      $data['jsonp'] = $this->_jsonP;
     }
 
-    $query['apikey'] = $this->_apiKey;
-    $options['query'] = $query;
+    $data['apikey'] = $this->_apiKey;
 
-    $client = new Guzzle();
     try
     {
-      $res = $client->get($this->_makeApiUrl($path), $options);
+      return Curl::get($this->_makeApiUrl($path), $data)->run()->getJson();
     }
-    catch(ClientException $e)
+    catch(CurlException $e)
     {
-      $json = $e->getResponse()->json();
+      $json = $e->getResponse()->getJson();
       $message = isset($json['reason']) ? $json['reason'] : $e->getMessage();
       throw new BattleNetException($message);
     }
-
-    return $res->json();
   }
 }
